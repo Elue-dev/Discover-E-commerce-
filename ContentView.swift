@@ -9,24 +9,32 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = ProductViewModel()
-    
-    var body: some View {
-        VStack {
-            Button {
-                viewModel.loadProducts()
-                print(viewModel.products)
-            } label: {
-                Text("see data")
-            }
 
+    var body: some View {
+        NavigationView {
+            VStack {
+                HStack {
+                    Text("Discover")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Image(systemName: "bell")
+                        .fontWeight(.semibold)
+                        .font(.title2)
+                }
+                VStack {
+                    CategoriesSection()
+                    ProductsGrid()
+                }
+                .padding(.top, 20)
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .padding()
         }
-        .onAppear {
-            viewModel.loadProducts()
-            viewModel.loadProductsCategories()
-        }
-        .padding()
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
