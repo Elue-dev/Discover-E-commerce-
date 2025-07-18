@@ -22,6 +22,7 @@ struct ContentView: View {
                         .fontWeight(.semibold)
                         .font(.title2)
                 }
+                
                 VStack {
                     CategoriesSection(viewModel: viewModel)
                     ProductsGrid(viewModel: viewModel)
