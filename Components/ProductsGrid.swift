@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ProductsGrid: View {
-    @StateObject private var viewModel = ProductViewModel()
+    @ObservedObject var viewModel: ProductViewModel
     
     var body: some View {
         ZStack {
             if viewModel.isLoadingProducts {
                  ProgressView()
             } else {
-                Text("Products Grid")
+                VStack {
+                    ForEach(viewModel.products, id: \.id) { product in
+                        Text(product.title)
+                    }
+                }
             }
             
            
@@ -28,6 +32,6 @@ struct ProductsGrid: View {
 
 struct ProductsGrid_Previews: PreviewProvider {
     static var previews: some View {
-        ProductsGrid()
+        ProductsGrid(viewModel: ProductViewModel())
     }
 }

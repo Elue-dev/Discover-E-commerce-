@@ -15,6 +15,7 @@ class ProductViewModel: ObservableObject {
     @Published var isLoadingCategories = false
     @Published var productsErrorMessage: String?
     @Published var categoriesErrorMessage: String?
+    @Published var selectedCategory: String? = "All"
     
     
     func loadProducts(completion: (() -> Void)? = nil) {
@@ -27,6 +28,7 @@ class ProductViewModel: ObservableObject {
                 switch result {
                 case .success(let response):
                     self.products = response.products
+                    print("fetched \(response.products.count) products")
                 case .failure(let error):
                     self.productsErrorMessage = error.localizedDescription
                 }
@@ -45,7 +47,12 @@ class ProductViewModel: ObservableObject {
                 self.isLoadingCategories = false
                 switch result {
                 case .success(let response):
-                    self.categories = response
+                    self.categories = response.map { category in
+                        category
+                            .replacingOccurrences(of: "-", with: " ")
+                            .capitalized
+                    }
+                    self.categories.insert("All", at: 0)
                 case .failure(let error):
                     self.categoriesErrorMessage = error.localizedDescription
                 }
@@ -54,5 +61,30 @@ class ProductViewModel: ObservableObject {
         }
     }
 
+    
+    func loadProductsForCategory(category: String, completion: (() -> Void)? = nil) {
+        selectedCategory = category
+
+        if category == "All" {
+            loadProducts()
+            return
+        }
+
+        isLoadingProducts = true
+        productsErrorMessage = nil
+        ProductService.shared.getProductsByCategory(category) { result in
+            DispatchQueue.main.async {
+                self.isLoadingProducts = false
+                switch result {
+                case .success(let response):
+                    self.products = response.products
+                    print("fetched \(response.products.count) products by category \(category)")
+                case .failure(let error):
+                    self.productsErrorMessage = error.localizedDescription
+                }
+                completion?()
+            }
+        }
+    }
 }
 

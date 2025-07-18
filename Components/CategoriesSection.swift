@@ -8,17 +8,31 @@
 import SwiftUI
 
 struct CategoriesSection: View {
-    @StateObject private var viewModel = ProductViewModel()
+    @ObservedObject var viewModel: ProductViewModel
     
     var body: some View {
         ZStack {
             if viewModel.isLoadingCategories {
                  ProgressView()
             } else {
-                Text("Categories")
+                VStack {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(viewModel.categories, id: \.self) { category in
+                                Chip(
+                                    title: category,
+                                    isSelected: viewModel.selectedCategory == category,
+                                    onTap: {
+                                        viewModel.selectedCategory = category
+                                        viewModel.loadProductsForCategory(category: category)
+                                    }
+                                )
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                }
             }
-            
-           
         }
         .task {
             viewModel.loadProductsCategories()
@@ -28,6 +42,5 @@ struct CategoriesSection: View {
 
 struct CategoriesSection_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriesSection()
-    }
+        CategoriesSection(viewModel: ProductViewModel())    }
 }

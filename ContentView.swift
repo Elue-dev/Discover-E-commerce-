@@ -23,8 +23,8 @@ struct ContentView: View {
                         .font(.title2)
                 }
                 VStack {
-                    CategoriesSection()
-                    ProductsGrid()
+                    CategoriesSection(viewModel: viewModel)
+                    ProductsGrid(viewModel: viewModel)
                 }
                 .padding(.top, 20)
                 
