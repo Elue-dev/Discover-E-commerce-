@@ -26,7 +26,7 @@ struct ProductsGrid: View {
                         }
                     }
                 }
-                .padding(20)
+                .padding(.top, 20)
             }
         }
         .task {

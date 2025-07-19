@@ -29,7 +29,6 @@ struct CategoriesSection: View {
                                 )
                             }
                         }
-                        .padding(.horizontal)
                     }
                 }
             }

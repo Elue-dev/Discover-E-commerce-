@@ -31,7 +31,7 @@ struct Chip: View {
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.appGray, lineWidth: 1)
+                        .stroke(isDarkMode ? Color.appBlack : Color.appGray, lineWidth: 1)
                 )
                 .foregroundColor(theme.textColor)
         }

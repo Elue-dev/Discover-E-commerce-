@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ProductCard: View {
+    @Environment(\.colorScheme) var colorScheme
     var product: Product
 
     var body: some View {
+        let isDarkMode = colorScheme == .dark
+
         VStack(alignment: .leading, spacing: 8) {
             AsyncImage(url: URL(string: product.images[0])) { image in
                 image
@@ -26,7 +29,7 @@ struct ProductCard: View {
                 ZStack(alignment: .topTrailing) {
                     ZStack(alignment: .bottom) {
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                            .stroke(isDarkMode ? Color.appBlack : Color.black.opacity(0.1), lineWidth: 1)
                     }
                     
                     Button {
@@ -34,8 +37,8 @@ struct ProductCard: View {
                     } label: {
                         Image(systemName: "plus")
                             .padding(10)
-                            .foregroundColor(.white)
-                            .background(.black)
+                            .foregroundColor(isDarkMode ?.black : .white)
+                            .background(isDarkMode ? Color.appGray : .black)
                             .cornerRadius(50)
                             .padding(7)
                     }
@@ -53,7 +56,6 @@ struct ProductCard: View {
                     .font(.system(size: 17))
                     .foregroundColor(.secondary)
             }
-            .padding(.horizontal, 4)
         }
         .frame(width: 180, alignment: .leading)
     }
