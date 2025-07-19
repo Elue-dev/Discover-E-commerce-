@@ -16,61 +16,85 @@ struct CartView: View {
     ]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                BackButton()
-                Spacer()
-                HeaderTitle(title: "My Cart")
-                Spacer()
-                NotificationIcon()
+        BackgroundWrapper {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    BackButton()
+                    Spacer()
+                    HeaderTitle(title: "My Cart")
+                    Spacer()
+                    NotificationIcon()
+                    
+                }
+                .padding()
                 
-            }
-            .padding()
-            
-            Spacer()
-            Spacer()
-            
-//            if cartItemsLocal.isEmpty {
-//                ContentUnavailableView(title: "Your cart is empty!", description: "Start adding sweaters to your cart!", iconName: "cart.fill")
-//            } else {
-//                ScrollView {
-//                    ForEach(Array(cartItemsLocal.enumerated()), id: \.element.id) { index, item in
-//                        CartRow(item: item)
-//                            .environmentObject(cartManager)
-//                            .padding(.horizontal)
-//                            .transition(.move(edge: .trailing).combined(with: .opacity))
-//
-//                        if index < cartItemsLocal.count - 1 {
-//                            Divider()
-//                            Spacer()
-//                            Spacer()
-//
-//                        }
-//                    }
-//                }
-//            }
-            
-            if cartManager.cartItems.count == 0 {
-                ContentUnavailableView(title: "Your cart is empty!", description: "Start adding sweaters to your cart!", iconName: "cart.fill")
-            } else {
-                ScrollView {
-                    ForEach(Array(cartManager.cartItems.enumerated()), id: \.element.id) { index, item in
-                        CartRow(item: item)
-                            .environmentObject(cartManager)
-                            .padding(.horizontal)
-                            .transition(.move(edge: .trailing).combined(with: .opacity))
+                Spacer()
+                Spacer()
+                
+                if cartItemsLocal.isEmpty {
+                    ContentUnavailableView(title: "Your cart is empty!", description: "Start adding sweaters to your cart!", iconName: "cart.fill")
+                } else {
+                    ScrollView {
+                        ForEach(Array(cartItemsLocal.enumerated()), id: \.element.id) { index, item in
+                            CartRow(item: item)
+                                .environmentObject(cartManager)
+                                .padding(.horizontal)
+                                .transition(.move(edge: .trailing).combined(with: .opacity))
+    
+                            if index < cartItemsLocal.count - 1 {
+                                Divider()
+                                Spacer()
+                                Spacer()
+    
+                            }
+                        }
                         
-                        if index < cartManager.cartItems.count - 1 {
-                            Divider()
-                            Spacer()
+                        
+                        Divider()
+                        
+                        HStack {
+                            Text("Total")
+                                .font(.title2)
+                                .fontWeight(.light)
+                                
+                            
                             Spacer()
                             
+                            Text("$ \(cartManager.total)")
+                                .font(.title2).bold()
+                                
+                        }
+                        .padding()
+                        
+                        
+                        AppButton(buttonLabel: "Go To Checkout", hasIcon: true) {
+                            print("Going to checkout")
                         }
                     }
                 }
+                
+//                if cartManager.cartItems.count == 0 {
+//                    ContentUnavailableView(title: "Your cart is empty!", description: "Start adding sweaters to your cart!", iconName: "cart.fill")
+//                } else {
+//                    ScrollView {
+//                        ForEach(Array(cartManager.cartItems.enumerated()), id: \.element.id) { index, item in
+//                            CartRow(item: item)
+//                                .environmentObject(cartManager)
+//                                .padding(.horizontal)
+//                                .transition(.move(edge: .trailing).combined(with: .opacity))
+//
+//                            if index < cartManager.cartItems.count - 1 {
+//                                Divider()
+//                                Spacer()
+//                                Spacer()
+//
+//                            }
+//                        }
+//                    }
+//                }
             }
+            .navigationBarBackButtonHidden(true)
         }
-        .navigationBarBackButtonHidden(true)
     }
 }
 

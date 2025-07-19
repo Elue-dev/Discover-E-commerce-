@@ -14,5 +14,7 @@ extension Color {
     static let appGray = Color("AppGray")
     static let background = Color("Background")
     static let text = Color("Text")
+    static let button = Color("Button")
+    static let buttonText = Color("ButtonText")
     static let systemBackground = Color(uiColor: .systemBackground)
 }
