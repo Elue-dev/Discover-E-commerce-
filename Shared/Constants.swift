@@ -14,7 +14,13 @@ struct Constants {
     
     struct UI {
         static let dummyImage = "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
+        
     }
+    
+//    enum Colors {
+//        case app_black = "AppBlack"
+//        case app_gray = "AppGray"
+//    }
     
     struct DummyData {
         static let sampleProduct = Product(

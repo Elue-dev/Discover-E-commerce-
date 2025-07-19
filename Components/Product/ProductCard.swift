@@ -46,7 +46,7 @@ struct ProductCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.title)
                     .font(.title3).bold()
-                    .lineLimit(2)
+                    .lineLimit(1)
                     .foregroundColor(.primary)
 
                 Text("$\(product.price, specifier: "%.2f")")
