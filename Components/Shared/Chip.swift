@@ -31,7 +31,7 @@ struct Chip: View {
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color("AppGray"), lineWidth: 1)
+                        .stroke(Color.appGray, lineWidth: 1)
                 )
                 .foregroundColor(theme.textColor)
         }
@@ -44,15 +44,15 @@ private struct ChipTheme {
     
     var textColor: Color {
         if isSelected {
-            return isDark ? Color("AppBlack") : Color("AppGray")
+            return isDark ? .appBlack : .appGray
         } else {
-            return isDark ? Color("AppGray") : Color("AppBlack")
+            return isDark ? .appGray : .appBlack
         }
     }
     
     var backgroundColor: Color {
         guard isSelected else { return .clear }
-        return isDark ? Color("AppGray") : Color("AppBlack")
+        return isDark ? .appGray : .appBlack
     }
 }
 struct Chip_Previews: PreviewProvider {
