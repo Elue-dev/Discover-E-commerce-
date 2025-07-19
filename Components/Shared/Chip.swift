@@ -27,7 +27,7 @@ struct Chip: View {
                 .padding(.horizontal, 15)
                 .background(theme.backgroundColor)
                 .fontWeight(.semibold)
-                .font(.title2)
+                .font(.title3)
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)

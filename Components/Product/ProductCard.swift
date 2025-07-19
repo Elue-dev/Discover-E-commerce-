@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ProductCard: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var cartManager: CartManager
     var product: Product
 
     var body: some View {
         let isDarkMode = colorScheme == .dark
 
         VStack(alignment: .leading, spacing: 8) {
-            AsyncImage(url: URL(string: product.images[0])) { image in
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
                 image
                     .resizable()
                     .scaledToFill()
@@ -33,7 +34,7 @@ struct ProductCard: View {
                     }
                     
                     Button {
-                        
+                        cartManager.addToCart(product: product)
                     } label: {
                         Image(systemName: "plus")
                             .padding(10)
@@ -66,5 +67,6 @@ struct ProductCard: View {
 struct ProductCard_Previews: PreviewProvider {
     static var previews: some View {
         return ProductCard(product: Constants.DummyData.sampleProduct)
+            .environmentObject(CartManager())
     }
 }

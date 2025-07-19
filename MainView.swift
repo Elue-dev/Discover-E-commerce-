@@ -8,30 +8,53 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel = ProductViewModel()
-
+    @Environment(\.colorScheme) var colorScheme
+    @StateObject var cartManager = CartManager()
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Text("Discover")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    Spacer()
-                    Image(systemName: "bell")
-                        .fontWeight(.semibold)
-                        .font(.title2)
+        let isDarkMode = colorScheme == .dark
+        
+        TabView {
+            HomeView()
+                .environmentObject(cartManager)
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("Home")
                 }
-                
-                VStack {
-                    CategoriesSection(viewModel: viewModel)
-                    ProductsGrid(viewModel: viewModel)
+            
+            SearchView()
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("Search")
                 }
-                .padding(.top, 20)
-                
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .padding()
+            
+            SavedView()
+                .tabItem {
+                    Image(systemName: "heart")
+                    Text("Saved")
+                }
+            
+            AccountView()
+                .tabItem {
+                    Image(systemName: "person.circle")
+                    Text("Account")
+                }
+        }
+        .accentColor(isDarkMode ? Color.appGray : Color.appBlack)
+        .onAppear {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithTransparentBackground()
+            appearance.backgroundColor = UIColor.clear
+            appearance.shadowColor = UIColor(Color.primary.opacity(0.3))
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+                .font: UIFont.systemFont(ofSize: 12, weight: .medium)
+            ]
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+                .font: UIFont.systemFont(ofSize: 12, weight: .semibold)
+            ]
+            
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
         }
     }
 }

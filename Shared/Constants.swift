@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Constants {
     struct API {
@@ -14,6 +15,7 @@ struct Constants {
     
     struct UI {
         static let dummyImage = "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
+        static let redColor = Color(hue: 1.0, saturation: 0.89, brightness: 0.835)
         
     }
     
